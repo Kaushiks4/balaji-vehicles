@@ -1,0 +1,97 @@
+.bg-dark {
+    background-color: green !important;
+}
+
+.navbar-brand {
+    margin-left: 10rem;
+    letter-spacing: .1rem;
+}
+
+.btn-outline-success {
+    color: white;
+    border-color: white;
+}
+
+.btn {
+    margin-right: 10vw;
+}
+
+.search input[type=text] {
+    margin-left: -1vw;
+    border: 2px white;
+    border-radius: 5px;
+    height: 40px;
+    padding: 10px;
+}
+
+.search input[type=submit] {
+    float: right;
+    background-color: white;
+    color: black;
+    width: auto;
+    height: 40px;
+    border: 2px white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search input[type=submit]:hover {
+    background-color: #45b649;
+    color: white;
+}
+
+a {
+    color: black;
+}
+
+.card-img-top {
+    width: 8rem;
+    height: 8rem;
+    margin-left: 7rem;
+    margin-top: 1rem;
+}
+
+.cardinit {
+    margin-left: 24.8rem;
+    width: 20rem !important;
+}
+
+.user {
+    margin-top: 1rem;
+    margin-left: 20vw;
+    width: 25rem;
+}
+
+.user .card-img-top {
+    margin-left: 9rem;
+}
+
+.user .card-title {
+    margin-left: 1vw;
+}
+
+.cardinit .card-img-top {
+    margin-left: 6rem;
+}
+
+.nigam a {
+    float: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-align: center;
+}
+
+.btn {
+    margin-right: 0em;
+}
+
+form {
+    margin-left: 13vw;
+    width: 18rem;
+}

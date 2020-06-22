@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/logged/home/">Balaji Transports</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logged/home/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logged/details/">Overall Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logged/users/">Mechanics</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <br>
+        <h1>
+            <%= date %>
+        </h1><br>
+        <% if(morning) { %>
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title"> Morning </h1>
+                    <table class="table table-hover">
+                        <thead>
+                            <th> Time </th>
+                            <th> Vehicle Number </th>
+                            <th> Vehicle Photo </th>
+                            <th> Description </th>
+                            <th> Mechanic Name </th>
+                            <th> Mechanic Photo </th>
+                        </thead>
+                        <% for(var key in info) { 
+                            for(var k in info[key]) { %>
+                            <tbody>
+                                <td>
+                                    <%= info[key][k]["Morning"].time %>
+                                </td>
+                                <td>
+                                    <%= info[key][k]["Morning"].vehicleNumber %>
+                                </td>
+                                <td><a href="<%= info[key][k]['Morning'].vPhoto %>"><img src="<%= info[key][k]['Morning'].vPhoto %>" width="100rem" height="100rem"></a></td>
+                                <td>
+                                    <%= info[key][k]["Morning"].description %>
+                                </td>
+                                <td>
+                                    <%= info[key][k]["Morning"].mechanicName %>
+                                </td>
+                                <td><a href="<%= info[key][k]['Morning'].mPhoto %>"><img src="<%= info[key][k]['Morning'].mPhoto %>" width="100rem" height="100rem"></a></td>
+                            </tbody>
+                            <% } %>
+                                <% } %>
+                    </table>
+                </div>
+            </div>
+            <% } %>
+                <% if(afternoon) { %>
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title"> Afternoon </h1>
+                            <table class="table table-hover">
+                                <thead>
+                                    <th> Time </th>
+                                    <th> Vehicle Number </th>
+                                    <th> Vehicle Photo </th>
+                                    <th> Description </th>
+                                    <th> Mechanic Name </th>
+                                    <th> Mechanic Photo </th>
+                                </thead>
+                                <% for(var key in info) { 
+                                    for(var k in info[key]) { 
+                                        if(info[key][k]["Afternoon"] != null) { %>
+                                    <tbody>
+                                        <td>
+                                            <%= info[key][k]["Afternoon"].time %>
+                                        </td>
+                                        <td>
+                                            <%= info[key][k]["Afternoon"].vehicleNumber %>
+                                        </td>
+                                        <td><a href="<%= info[key][k]['Afternoon'].vPhoto %>"><img src="<%= info[key][k]['Afternoon'].vPhoto %>" width="100rem" height="100rem"></a></td>
+                                        <td>
+                                            <%= info[key][k]["Afternoon"].description %>
+                                        </td>
+                                        <td>
+                                            <%= info[key][k]["Afternoon"].mechanicName %>
+                                        </td>
+                                        <td><a href="<%= info[key][k]['Afternoon'].mPhoto %>"><img src="<%= info[key][k]['Afternoon'].mPhoto %>" width="100rem" height="100rem"></a></td>
+                                    </tbody>
+                                    <% } %>
+                                        <% } %>
+                                            <% } %>
+                            </table>
+                        </div>
+                    </div>
+                    <% } %>
+                        <% if(evening) { %>
+                            <br><br>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h1 class="card-title"> Evening </h1>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th> Time </th>
+                                            <th> Vehicle Number </th>
+                                            <th> Vehicle Photo </th>
+                                            <th> Description </th>
+                                            <th> Mechanic Name </th>
+                                            <th> Mechanic Photo </th>
+                                        </thead>
+                                        <% for(var key in info) { 
+                                            for(var k in info[key]) { 
+                                                if(info[key][k]["Evening"] != null) { %>
+                                            <tbody>
+                                                <td>
+                                                    <%= info[key][k]["Evening"].time %>
+                                                </td>
+                                                <td>
+                                                    <%= info[key]["Evening"][k]["Evening"].vehicleNumber %>
+                                                </td>
+                                                <td><a href="<%= info[key][k]['Evening'].vPhoto %>"><img src="<%= info[key][k]['Evening'].vPhoto %>" width="100rem" height="100rem"></a></td>
+                                                <td>
+                                                    <%= info[key]["Evening"][k]["Evening"].description %>
+                                                </td>
+                                                <td>
+                                                    <%= info[key]["Evening"][k]["Evening"].mechanicName %>
+                                                </td>
+                                                <td><a href="<%= info[key][k]['Evening'].mPhoto %>"><img src="<%= info[key][k]['Evening'].mPhoto %>" width="100rem" height="100rem"></a></td>
+                                            </tbody>
+                                            <% } %>
+                                                <% } %>
+                                                    <% } %>
+                                    </table>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% if(empty) { %>
+                                    <h1> No Details for today found.</h1>
+                                    <% } %>
+    </div>
+    <br><br>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+</body>
+
+</html>
