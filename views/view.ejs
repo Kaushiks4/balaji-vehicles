@@ -14,14 +14,14 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/logged/home/">Balaji Transports</a>
+        <a class="navbar-brand" href="/">Balaji Transports</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/logged/home/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/logged/details/">Overall Details</a>
@@ -93,26 +93,38 @@
                                         <td>
                                             <a href='<%= info[key][k]["Morning"].mPhoto %>'><img src='<%= info[key][k]["Morning"].mPhoto %>' width="100rem" height="100rem" alt="Image"></a>
                                         </td>
-                                        <% } %>
-                                            <% if(info[key][k]["Afternoon"] != null) { %>
-                                                <td>
-                                                    <a href='<%= info[key][k]["Afternoon"].vPhoto %>'><img src='<%= info[key][k]["Afternoon"].vPhoto %>' width="100rem" height="100rem" alt="Image"></a>
-                                                </td>
-                                                <td>
-                                                    <a href='<%= info[key][k]["Afternoon"].mPhoto %>'><img src='<%= info[key][k]["Afternoon"].mPhoto %>' width="100rem" height="100rem" alt="Image"></a>
-                                                </td>
-                                                <% } %>
-                                                    <% if(info[key][k]["Evening"] != null) { %>
-                                                        <td>
-                                                            <a href='<%= info[key][k]["Evening"].vPhoto %>'><img src='<%= info[key][k]["Evening"].vPhoto %>' width="100rem" height="100rem" alt="Image"></a>
-                                                        </td>
-                                                        <td>
-                                                            <a href='<%= info[key][k]["Evening"].mPhoto %>'><img src='<%= info[key][k]["Evening"].mPhoto %>' width="100rem" height="100rem" alt="Image"></a>
-                                                        </td>
-                                                        <td>
-                                                            <%= info[key][k]["Evening"].description %>
-                                                        </td>
+                                        <% } else { %>
+                                            <td> Not updated. </td>
+                                            <td> Not updated. </td>
+                                            <td> Not updated. </td>
+                                            <td> Not updated. </td>
+                                            <% } %>
+                                                <% if(info[key][k]["Afternoon"] != null) { %>
+                                                    <td>
+                                                        <a href='<%= info[key][k]["Afternoon"].vPhoto %>'><img src='<%= info[key][k]["Afternoon"].vPhoto %>' width="100rem" height="100rem" alt="Image"></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href='<%= info[key][k]["Afternoon"].mPhoto %>'><img src='<%= info[key][k]["Afternoon"].mPhoto %>' width="100rem" height="100rem" alt="Image"></a>
+                                                    </td>
+                                                    <% } else { %>
+                                                        <td> Not updated. </td>
+                                                        <td> Not updated. </td>
                                                         <% } %>
+                                                            <% if(info[key][k]["Evening"] != null) { %>
+                                                                <td>
+                                                                    <a href='<%= info[key][k]["Evening"].vPhoto %>'><img src='<%= info[key][k]["Evening"].vPhoto %>' width="100rem" height="100rem" alt="Image"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <a href='<%= info[key][k]["Evening"].mPhoto %>'><img src='<%= info[key][k]["Evening"].mPhoto %>' width="100rem" height="100rem" alt="Image"></a>
+                                                                </td>
+                                                                <td>
+                                                                    <%= info[key][k]["Evening"].description %>
+                                                                </td>
+                                                                <% } else{ %>
+                                                                    <td> Not updated. </td>
+                                                                    <td> Not updated. </td>
+                                                                    <td> Not updated. </td>
+                                                                    <% } %>
                                 </tbody>
                                 <% } %>
                         </table>
@@ -188,25 +200,37 @@
                                                 <td>
                                                     <%= key %>
                                                 </td>
-                                                <td>
-                                                    <%= info[key]["Morning"].description %>
-                                                </td>
-                                                <td><a href='<%= info[key]["Morning"].vPhoto %>'><img src='<%= info[key]["Morning"].vPhoto %>' width="100rem" height="100rem"></a></td>
-                                                <td>
-                                                    <%= info[key]["Morning"].mechanicName %>
-                                                </td>
-                                                <% if(info[key]["Afternoon"] != null){ %>
+                                                <% if(info[key]["Morning"] != null) { %>
                                                     <td>
-                                                        <%= info[key]["Afternoon"].description %>
+                                                        <%= info[key]["Morning"].description %>
                                                     </td>
-                                                    <td><a href='<%= info[key]["Afternoon"].vPhoto %>'><img src='<%= info[key]["Afternoon"].vPhoto %>' width="100rem" height="100rem"></a></td>
-                                                    <% } %>
-                                                        <% if(info[key]["Evening"] != null){ %>
-                                                            <td>
-                                                                <%= info[key]["Evening"].description %>
-                                                            </td>
-                                                            <td><a href='<%= info[key]["Evening"].vPhoto %>'><img src='<%= info[key]["Evening"].vPhoto %>' width="100rem" height="100rem"></a></td>
-                                                            <% } %>
+                                                    <td><a href='<%= info[key]["Morning"].vPhoto %>'><img src='<%= info[key]["Morning"].vPhoto %>' width="100rem" height="100rem"></a></td>
+                                                    <td>
+                                                        <%= info[key]["Morning"].mechanicName %>
+                                                    </td>
+                                                    <% } else{ %>
+                                                        <td>Not updated.</td>
+                                                        <td>Not updated.</td>
+                                                        <td>Not updated.</td>
+                                                        <% } %>
+                                                            <% if(info[key]["Afternoon"] != null){ %>
+                                                                <td>
+                                                                    <%= info[key]["Afternoon"].description %>
+                                                                </td>
+                                                                <td><a href='<%= info[key]["Afternoon"].vPhoto %>'><img src='<%= info[key]["Afternoon"].vPhoto %>' width="100rem" height="100rem"></a></td>
+                                                                <% } else{ %>
+                                                                    <td>Not updated.</td>
+                                                                    <td>Not updated.</td>
+                                                                    <% } %>
+                                                                        <% if(info[key]["Evening"] != null){ %>
+                                                                            <td>
+                                                                                <%= info[key]["Evening"].description %>
+                                                                            </td>
+                                                                            <td><a href='<%= info[key]["Evening"].vPhoto %>'><img src='<%= info[key]["Evening"].vPhoto %>' width="100rem" height="100rem"></a></td>
+                                                                            <% } else{ %>
+                                                                                <td>Not updated.</td>
+                                                                                <td>Not updated.</td>
+                                                                                <% } %>
                                             </tbody>
                                             <% } %>
                                     </table>
