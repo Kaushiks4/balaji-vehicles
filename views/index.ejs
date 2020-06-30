@@ -42,7 +42,8 @@
         </h1><br>
         <br><br>
         <% for(var key in info){ %>
-            <% for(var k in info[key]) { %>
+            <% for(var k in info[key]) { 
+                var j = k.split(" ");%>
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title">
@@ -63,15 +64,15 @@
                             <tbody>
                                 <% if(morning) { %>
                                     <td>
-                                        <div id="demo" class="carousel" data-ride="carousel" data-interval="false">
+                                        <div id="<%= j[0] %>" class="carousel" data-ride="carousel" data-interval="false">
                                             <ul class="carousel-indicators">
                                                 <% var l = 0;
                                                 for(var m in info[key][k]["Morning"]["Images"]) {
                                                     if(l==0){ %>
-                                                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                                                    <li data-target="#<%= j[0] %>" data-slide-to="0" class="active"></li>
                                                     <% l++ %>
                                                         <% } else{ %>
-                                                            <li data-target="#demo" data-slide-to="<%= l %>"></li>
+                                                            <li data-target="#<%= j[0] %>" data-slide-to="<%= l %>"></li>
                                                             <% } %>
                                                                 <% } %>
                                             </ul>
@@ -90,10 +91,10 @@
                                                             <% } %>
                                                                 <% } %>
                                             </div>
-                                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                            <a class="carousel-control-prev" href="#<%= j[0] %>" data-slide="prev">
                                                 <span class="carousel-control-prev-icon"></span>
                                             </a>
-                                            <a class="carousel-control-next" href="#demo" data-slide="next">
+                                            <a class="carousel-control-next" href="#<%= j[0] %>" data-slide="next">
                                                 <span class="carousel-control-next-icon"></span>
                                             </a>
                                         </div>
@@ -101,15 +102,15 @@
                                     <% } %>
                                         <% if(afternoon) { %>
                                             <td>
-                                                <div id="demo1" class="carousel" data-ride="carousel" data-interval="false">
+                                                <div id="<%= j[0] %>1" class="carousel" data-ride="carousel" data-interval="false">
                                                     <ul class="carousel-indicators">
                                                         <% var l = 0;
                                                         for(var m in info[key][k]["Afternoon"]["Images"]) {
                                                             if(l==0){ %>
-                                                            <li data-target="#demo1" data-slide-to="0" class="active"></li>
+                                                            <li data-target="#<%= j[0] %>1" data-slide-to="0" class="active"></li>
                                                             <% l++ %>
                                                                 <% } else{ %>
-                                                                    <li data-target="#demo1" data-slide-to="<%= l %>"></li>
+                                                                    <li data-target="#<%= j[0] %>1" data-slide-to="<%= l %>"></li>
                                                                     <% } %>
                                                                         <% } %>
                                                     </ul>
@@ -128,10 +129,10 @@
                                                                     <% } %>
                                                                         <% } %>
                                                     </div>
-                                                    <a class="carousel-control-prev" href="#demo1" data-slide="prev">
+                                                    <a class="carousel-control-prev" href="#<%= j[0] %>1" data-slide="prev">
                                                         <span class="carousel-control-prev-icon"></span>
                                                     </a>
-                                                    <a class="carousel-control-next" href="#demo1" data-slide="next">
+                                                    <a class="carousel-control-next" href="#<%= j[0] %>1" data-slide="next">
                                                         <span class="carousel-control-next-icon"></span>
                                                     </a>
                                                 </div>
@@ -139,15 +140,15 @@
                                             <% } %>
                                                 <% if(evening) { %>
                                                     <td>
-                                                        <div id="demo3" class="carousel" data-ride="carousel" data-interval="false">
+                                                        <div id="<%= j[0] %>3" class="carousel" data-ride="carousel" data-interval="false">
                                                             <ul class="carousel-indicators">
                                                                 <% var l = 0;
                                                                     for(var m in info[key][k]["Evening"]["Images"]) {
                                                                         if(l==0){ %>
-                                                                    <li data-target="#demo3" data-slide-to="0" class="active"></li>
+                                                                    <li data-target="#<%= j[0] %>3" data-slide-to="0" class="active"></li>
                                                                     <% l++ %>
                                                                         <% } else{ %>
-                                                                            <li data-target="#demo3" data-slide-to="<%= l %>"></li>
+                                                                            <li data-target="#<%= j[0] %>3" data-slide-to="<%= l %>"></li>
                                                                             <% } %>
                                                                                 <% } %>
                                                             </ul>
@@ -166,10 +167,10 @@
                                                                             <% } %>
                                                                                 <% } %>
                                                             </div>
-                                                            <a class="carousel-control-prev" href="#demo3" data-slide="prev">
+                                                            <a class="carousel-control-prev" href="#<%= j[0] %>3" data-slide="prev">
                                                                 <span class="carousel-control-prev-icon"></span>
                                                             </a>
-                                                            <a class="carousel-control-next" href="#demo3" data-slide="next">
+                                                            <a class="carousel-control-next" href="#<%= j[0] %>3" data-slide="next">
                                                                 <span class="carousel-control-next-icon"></span>
                                                             </a>
                                                         </div>
