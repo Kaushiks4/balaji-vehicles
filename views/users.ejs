@@ -26,22 +26,34 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/logged/details/">Overall Details</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logged/workers/">Workers</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/logged/users/">Users</a>
                 </li>
             </ul>
+            <div class="search">
+                <form method="post">
+                    <input type="text" name="search" placeholder="Search.." />
+                    <input type="submit" value="Search" />
+                </form>
+            </div>
         </div>
-
     </nav>
     <br>
     <div class="container">
         <br><br>
-        <a href="/logged/adduser/" class="float-right btn btn-primary">Add a Mechanic</a>
+        <a href="/logged/adduser/" class="float-right btn btn-primary">Add User</a>
         <% if(add) { %>
             <form method="post">
                 <div class="form-group">
-                    <label for="name"> Mechanic name: </label>
+                    <label for="name"> Username: </label>
                     <input type="text" id="name" name="username" required/>
+                </div>
+                <div class="form-group">
+                    <label for="pwd"> Password: </label><br>
+                    <input type="text" id="pwd" name="pwd" required/>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-success" value="Submit">
@@ -49,7 +61,7 @@
             </form>
             <% } %>
                 <% if(empty){ %>
-                    <h1> No mechanics found.</h1>
+                    <h1> No users found. </h1>
                     <% } %>
                         <% if(show) { %>
                             <div class="card user">
@@ -57,11 +69,15 @@
                                 <div class="card-body">
                                     <h3 class="card-title">Users</h3><br>
                                     <% for(var key in info){ %>
-                                        <a href="/logged/delete/<%= key %>" class="float-right btn btn-danger">Delete</a>
+                                        <a href="/logged/deleteu/<%= key %>" class="float-right btn btn-danger">Delete</a>
                                         <strong><p>
                                             Name:
-                                            <%= info[key].Mechanic_name %>
+                                            <%= info[key].username %>
                                         </p></strong>
+                                        <p>
+                                            Password:
+                                            <%= info[key].password %>
+                                        </p>
                                         <br>
                                         <% } %>
                                 </div>

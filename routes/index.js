@@ -5,7 +5,6 @@ var router = express.Router();
 var admin = require('firebase-admin');
 var db = admin.database().ref();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
     var morning = false;
     var a = false;
@@ -54,7 +53,7 @@ router.get('/', function(req, res, next) {
                 res.render('index', { title: 'Balaji Transports', date: date, info: details, morning: morning, afternoon: a, evening: e, empty: false });
             }
         } else {
-            res.render('index', { title: 'Balaji Transports', date: date, info: null, morning: false, afternoon: false, evening: false, empty: true });
+            res.render('index', { title: 'Details', date: date, info: null, morning: false, afternoon: false, evening: false, empty: true });
         }
     });
 });
@@ -76,7 +75,7 @@ router.post('/logged/details/mechanic', function(req, res, next) {
     var info = {}
     var details = {}
     var flag = 0;
-    var mname = req.body.mname
+    var mname = req.body.mname;
     mname = mname.toLowerCase();
     var minfo = db.child("Mechanic");
     var vinfo = db.child("Daily");
@@ -183,24 +182,87 @@ router.post('/logged/details/date', function(req, res, next) {
     });
 });
 
-router.get('/logged/users/', function(req, res, next) {
+router.get('/logged/workers/', function(req, res, next) {
     var map = {}
     var users = db.child("Mechanics");
     users.once("value", function(snapshot) {
         if (snapshot != null) {
             map = snapshot.val();
-            res.render('user', { title: "Users", info: map, empty: false, add: false, show: true });
+            res.render('workers', { title: "Users", info: map, empty: false, add: false, show: true });
         } else {
-            res.render('user', { title: "Users", info: null, empty: true, add: false, show: false });
+            res.render('workers', { title: "Users", info: null, empty: true, add: false, show: false });
         }
     });
 });
 
-router.get('/logged/adduser/', function(req, res, next) {
-    res.render('user', { title: "Users", info: null, empty: false, add: true, show: false });
+router.get('/logged/users/', function(req, res, next) {
+    var map = {}
+    var users = db.child("Users");
+    users.once("value", function(snapshot) {
+        if (snapshot != null) {
+            map = snapshot.val();
+            res.render('users', { title: "Users", info: map, empty: false, add: false, show: true });
+        } else {
+            res.render('users', { title: "Users", info: null, empty: true, add: false, show: false });
+        }
+    });
 });
 
-router.post('/logged/adduser/', function(req, res, next) {
+router.post('/logged/users/', function(req, res, next) {
+    var map = {}
+    var details = {}
+    var s = req.body.search;
+    s = s.toLowerCase();
+    var users = db.child("Users");
+    users.once("value", function(snapshot) {
+        if (snapshot != null) {
+            map = snapshot.val();
+            for (var key in map) {
+                if (key.toLowerCase() == s) {
+                    details[key] = map[key]
+                }
+            }
+            res.render('users', { title: "Users", info: details, empty: false, add: false, show: true });
+        } else {
+            res.render('users', { title: "Users", info: null, empty: true, add: false, show: false });
+        }
+    });
+});
+
+router.post('/logged/workers/', function(req, res, next) {
+    var map = {}
+    var details = {}
+    var s = req.body.search;
+    s = s.toLowerCase();
+    var users = db.child("Mechanics");
+    users.once("value", function(snapshot) {
+        if (snapshot != null) {
+            map = snapshot.val();
+            for (var key in map) {
+                if (key.toLowerCase() == s) {
+                    details[key] = map[key];
+                }
+            }
+            res.render('workers', { title: "Users", info: details, empty: false, add: false, show: true });
+        } else {
+            res.render('workers', { title: "Users", info: null, empty: true, add: false, show: false });
+        }
+    });
+});
+
+
+
+router.get('/logged/addworker/', function(req, res, next) {
+    res.render('workers', { title: "Workers", info: null, empty: false, add: true, show: false });
+});
+
+
+
+router.get('/logged/adduser/', function(req, res, next) {
+    res.render('users', { title: "Users", info: null, empty: false, add: true, show: false });
+});
+
+router.post('/logged/addworker/', function(req, res, next) {
     var map = {}
     var users = db.child("Mechanics");
     var name = req.body.username;
@@ -208,10 +270,31 @@ router.post('/logged/adduser/', function(req, res, next) {
         Mechanic_name: name,
     }
     users.child(name).set(data);
+    res.redirect('/logged/workers/')
+});
+
+router.post('/logged/adduser/', function(req, res, next) {
+    var map = {}
+    var users = db.child("Users");
+    var name = req.body.username;
+    var password = req.body.pwd;
+    data = {
+        username: name,
+        password: password,
+    }
+    users.child(name).set(data);
     res.redirect('/logged/users/')
 });
 
-router.get('/logged/delete/:name', function(req, res, next) {
+
+router.get('/logged/deletew/:name', function(req, res, next) {
+    var name = req.params.name;
+    users = db.child('Mechanics');
+    users.child(name).remove();
+    res.redirect('/logged/workers/');
+});
+
+router.get('/logged/deleteu/:name', function(req, res, next) {
     var name = req.params.name;
     users = db.child('Users');
     users.child(name).remove();
