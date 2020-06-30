@@ -181,6 +181,9 @@
                             <p style="font-size: large;"><strong>Morning Description: </strong>
                                 <%= info[key][k]["Morning"].description %>
                             </p>
+                            <p style="font-size: large;"><strong>Time: </strong>
+                                <%= info[key][k]["Morning"].time %>
+                            </p>
                             <p style="font-size: large;"><strong>Mechanic Name: </strong>
                                 <%= info[key][k]["Morning"].mechanicName %>
                             </p>
@@ -206,6 +209,9 @@
                                     <p style="font-size: large;"><strong>Afternoon Description: </strong>
                                         <%= info[key][k]["Afternoon"].description %>
                                     </p>
+                                    <p style="font-size: large;"><strong>Time: </strong>
+                                        <%= info[key][k]["Afternoon"].time %>
+                                    </p>
                                     <p style="font-size: large;"><strong>Mechanic Name: </strong>
                                         <%= info[key][k]["Afternoon"].mechanicName %>
                                     </p>
@@ -216,6 +222,9 @@
                                         <% if(info[key][k]["Evening"] != null) { %>
                                             <p style="font-size: large;"><strong>Evening Description: </strong>
                                                 <%= info[key][k]["Evening"].description %>
+                                            </p>
+                                            <p style="font-size: large;"><strong>Time: </strong>
+                                                <%= info[key][k]["Evening"].time %>
                                             </p>
                                             <p style="font-size: large;"><strong>Mechanic Name: </strong>
                                                 <%= info[key][k]["Evening"].mechanicName %>
