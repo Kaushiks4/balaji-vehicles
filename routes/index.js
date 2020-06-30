@@ -53,7 +53,7 @@ router.get('/', function(req, res, next) {
                 res.render('index', { title: 'Balaji Transports', date: date, info: details, morning: morning, afternoon: a, evening: e, empty: false });
             }
         } else {
-            res.render('index', { title: 'Details', date: date, info: null, morning: false, afternoon: false, evening: false, empty: true });
+            res.render('index', { title: 'Balaji Transports', date: date, info: null, morning: false, afternoon: false, evening: false, empty: true });
         }
     });
 });
@@ -94,16 +94,16 @@ router.post('/logged/details/mechanic', function(req, res, next) {
             if (flag == 0) {
                 res.send("Mechanic not found");
             } else {
-                res.render('view', { title: "Details", dates: false, mechanic: true, vehicle: false, info: details, empty: false, vname: null, mname: mname, sdate: null, edate: null });
+                res.render('view', { title: "Mechanic Details", dates: false, mechanic: true, vehicle: false, info: details, empty: false, vname: null, mname: mname, sdate: null, edate: null });
             }
         } else {
-            res.render('view', { title: "Details", dates: false, mechanic: true, vehicle: false, info: null, empty: true, vname: null, mname: mname, sdate: null, edate: null });
+            res.render('view', { title: "Mechanic Details", dates: false, mechanic: true, vehicle: false, info: null, empty: true, vname: null, mname: mname, sdate: null, edate: null });
         }
     });
 });
 
 router.get('/logged/details/vehicle', function(req, res, next) {
-    res.render('view', { title: "Details", dates: false, mechanic: false, vehicle: true, info: null, empty: false, vname: null, mname: null, sdate: null, edate: null });
+    res.render('view', { title: "Vehicles", dates: false, mechanic: false, vehicle: true, info: null, empty: false, vname: null, mname: null, sdate: null, edate: null });
 });
 
 router.post('/logged/details/vehicle', function(req, res, next) {
@@ -145,7 +145,7 @@ router.post('/logged/details/vehicle', function(req, res, next) {
             }
 
         } else {
-            res.render('view', { title: "Details", dates: false, mechanic: false, vehicle: true, info: null, empty: true, vname: vname, mname: null, sdate: null, edate: null });
+            res.render('view', { title: "Vehicle/Machine Details", dates: false, mechanic: false, vehicle: true, info: null, empty: true, vname: vname, mname: null, sdate: null, edate: null });
         }
     });
 });
@@ -188,9 +188,9 @@ router.get('/logged/workers/', function(req, res, next) {
     users.once("value", function(snapshot) {
         if (snapshot != null) {
             map = snapshot.val();
-            res.render('workers', { title: "Users", info: map, empty: false, add: false, show: true });
+            res.render('workers', { title: "Workers", info: map, empty: false, add: false, show: true });
         } else {
-            res.render('workers', { title: "Users", info: null, empty: true, add: false, show: false });
+            res.render('workers', { title: "Workers", info: null, empty: true, add: false, show: false });
         }
     });
 });
@@ -243,9 +243,9 @@ router.post('/logged/workers/', function(req, res, next) {
                     details[key] = map[key];
                 }
             }
-            res.render('workers', { title: "Users", info: details, empty: false, add: false, show: true });
+            res.render('workers', { title: "Workers", info: details, empty: false, add: false, show: true });
         } else {
-            res.render('workers', { title: "Users", info: null, empty: true, add: false, show: false });
+            res.render('workers', { title: "Workers", info: null, empty: true, add: false, show: false });
         }
     });
 });
