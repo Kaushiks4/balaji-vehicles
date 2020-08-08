@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>
+        <%= title %>
+    </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Balaji Transports</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/secured/home/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logged/details/">Overall Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logged/workers/">Workers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logged/users/">Users</a>
+                </li>
+            </ul>
+            <div class="search">
+                <form method="post">
+                    <input type="text" name="search" placeholder="Search.." />
+                    <input type="submit" value="Search" />
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <br>
+        <ul class="nav justify-content-center nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="/logged/dates/">Select Dates</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logged/vehicle/">Search by Vehicle</a>
+            </li>
+        </ul>
+        <br><br>
+        <% if(dates) { %>
+            <form method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">From Date</label>
+                    <input type="date" class="form-control" id="exampleInputEmail1" name="stDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">To Date</label>
+                    <input type="date" class="form-control" id="exampleInputPassword1" name="endDate" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form><br>
+            <% } %>
+                <% if(vehicle) { %>
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Vehicle Number</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="vehicleNum" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form><br><br>
+                    <% } %>
+                        <% if(details) { %>
+                            <% if(date) { %>
+                                <h1>
+                                    <%= sdate %> to
+                                        <%= edate %>
+                                </h1><br>
+                                <% } %>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th> Date </th>
+                                            <th> Vehicle/Work </th>
+                                            <th> Work Details </th>
+                                            <th> Mechanic Name </th>
+                                        </thead>
+                                        <tbody>
+                                            <% for(var key in info) { 
+                        for(var k in info[key]) { %>
+                                                <tr class="clickable-rows" data-href="/secured/home/<%= key %>/<%= k %>/">
+                                                    <td>
+                                                        <%= key %>
+                                                    </td>
+                                                    <td>
+                                                        <%= k %>
+                                                    </td>
+                                                    <td>
+                                                        <% if(info[key][k].Morning != null) { %>
+                                                            <%= info[key][k].Morning.description %>
+                                                                <% } else if(info[key][k].Afternoon != null) { %>
+                                                                    <%= info[key][k].Afternoon.description %>
+                                                                        <% } else if(info[key][k].Evening != null) { %>
+                                                                            <%= info[key][k].Evening.description %>
+                                                                                <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <% if(info[key][k].Morning != null) { %>
+                                                            <%= info[key][k].Morning.mechanicName %>
+                                                                <% } else if(info[key][k].Afternoon != null) { %>
+                                                                    <%= info[key][k].Afternoon.mechanicName %>
+                                                                        <% } else if(info[key][k].Evening != null) { %>
+                                                                            <%= info[key][k].Evening.mechanicName %>
+                                                                                <% } %>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <% } %>
+                                        </tbody>
+                                    </table>
+                                    <% } %>
+                                        <% if(empty) { %>
+                                            <h1> No Details found.</h1>
+                                            <% } %>
+    </div>
+    <br><br>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/popper.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script>
+        jQuery(document).ready(function() {
+            $(".clickable-rows").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+</body>
+
+</html>
