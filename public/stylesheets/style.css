@@ -17,7 +17,7 @@
 }
 
 .search input[type=text] {
-    margin-left: -1vw;
+    margin-left: -2vw;
     border: 2px white;
     border-radius: 5px;
     height: 40px;
@@ -36,7 +36,7 @@
 }
 
 .search input[type=submit]:hover {
-    background-color: #45b649;
+    background-color: #0069d9;
     color: white;
 }
 

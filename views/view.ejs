@@ -76,12 +76,12 @@
                                                         for(var m in info["Morning"]["Images"]) {
                                                             if(l==0){ %>
                                                     <div class="carousel-item active">
-                                                        <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" width="332vw" alt="Image"></a>
+                                                        <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" alt="Image"></a>
                                                     </div>
                                                     <% l++ %>
                                                         <% } else{ %>
                                                             <div class="carousel-item">
-                                                                <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" width="332vw" alt="Image"></a>
+                                                                <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" alt="Image"></a>
                                                             </div>
                                                             <% } %>
                                                                 <% } %>
@@ -114,12 +114,12 @@
                                                             for(var m in info["Afternoon"]["Images"]) {
                                                                 if(l==0) { %>
                                                             <div class="carousel-item active">
-                                                                <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" width="332vw" alt="Image"></a>
+                                                                <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" alt="Image"></a>
                                                             </div>
                                                             <% l++ %>
                                                                 <% } else { %>
                                                                     <div class="carousel-item">
-                                                                        <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" width="332vw" alt="Image"></a>
+                                                                        <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" alt="Image"></a>
                                                                     </div>
                                                                     <% } %>
                                                                         <% } %>
@@ -152,12 +152,12 @@
                                                         for(var m in info["Evening"]["Images"]) {
                                                             if(l==0) { %>
                                                                     <div class="carousel-item active">
-                                                                        <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' width="auto" height="300vw" width="332vw" alt="Image"></a>
+                                                                        <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' width="auto" height="300vw" alt="Image"></a>
                                                                     </div>
                                                                     <% l++ %>
                                                                         <% } else { %>
                                                                             <div class="carousel-item">
-                                                                                <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' height="300vw" width="332vw" alt="Image"></a>
+                                                                                <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' height="300vw" alt="Image"></a>
                                                                             </div>
                                                                             <% } %>
                                                                                 <% } %>
@@ -211,7 +211,7 @@
                         <% break %>
                             <% } %>
                                 <% for(var key in info) { %>
-                                    <% if(info[key].Old_Photo != null || info[key].New_Photo != null) { %>
+                                    <% if(info[key].Old_Photo != "" && info[key].Old_Photo != null || info[key].New_Photo != "" && info[key].New_Photo != null) { %>
                                         <table class="table table-hover">
                                             <thead>
                                                 <th>Old Spare Photo</th>

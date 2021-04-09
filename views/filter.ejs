@@ -68,8 +68,12 @@
                 <% if(vehicle) { %>
                     <form method="post">
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Vehicle Number</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="vehicleNum" required>
+                            <label for="cars">Choose a Vehicle:</label>
+                            <select name="cars" id="cars">
+                                <% for(var v in vehicles) { %>
+                                    <option value="<%= v %>"><%= v %></option>
+                                <% } %>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form><br><br>

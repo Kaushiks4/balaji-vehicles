@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var admin = require("firebase-admin");
+const session = require('express-session')
 
 var serviceAccount = require("./vehicle.json");
 
@@ -15,7 +16,11 @@ admin.initializeApp({
 var indexRouter = require('./routes/index');
 
 var app = express();
-
+app.use(session({ 
+    secret: 'balaji@vehicle.works', 
+    resave: true, 
+    saveUninitialized: true
+  })) 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

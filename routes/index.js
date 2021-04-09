@@ -4,10 +4,7 @@ var router = express.Router();
 
 var admin = require('firebase-admin');
 var db = admin.database().ref();
-var stDate = ""
-var endate = ""
 var vNum = ""
-var master = ""
 
 router.get('/', function(req, res, next) {
     res.render('login');
@@ -19,7 +16,7 @@ router.post('/', function(req, res, next) {
 
     if (name.toLowerCase() == "balaji") {
         if (pwd == "balajitransports") {
-            master = "success";
+            req.session.master = "success";
             res.redirect('/secured/home/')
         } else {
             res.send("Invalid Password");
@@ -30,7 +27,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.get('/secured/home/', function(req, res, next) {
-    if (master == "success") {
+    if (req.session.master) {
         var d = new Date();
         var dd = d.getDate();
         var m = d.getMonth() + 1;
@@ -66,7 +63,7 @@ router.get('/secured/home/', function(req, res, next) {
 });
 
 router.post('/secured/home/', function(req, res, next) {
-    if (master == "success") {
+    if (req.session.master) {
         var search = req.body.search.toLowerCase()
         var d = new Date();
         var dd = d.getDate();
@@ -135,33 +132,39 @@ router.get('/logged/dates/', function(req, res, next) {
 });
 
 router.get('/logged/vehicle/', function(req, res, next) {
-    res.render('filter', { title: "Details", details: false, empty: false, sdate: null, edate: null, dates: false, vehicle: true, date: false });
+    req.session.vehicles = {}
+    var info = db.child("Vehicles")
+    info.once("value", function(snap){
+        if(snap.val() != null){
+            req.session.vehicles = snap.val();
+        }
+        res.render('filter', { title: "Details", details: false, empty: false, sdate: null, edate: null, dates: false, vehicle: true, date: false , vehicles:req.session.vehicles});
+    });
 });
 
 
 router.post('/logged/dates/', function(req, res, next) {
     if (req.body.stDate != null) {
-        stDate = req.body.stDate
-        endate = req.body.endDate
+        req.session.stDate = req.body.stDate
+        req.session.endate = req.body.endDate
     } else {
         search = req.body.search.toLowerCase()
     }
-    var sdate = stDate.split("-");
-    var edate = endate.split("-")
+    var sdate = req.session.stDate.split("-");
+    var edate = req.session.endate.split("-")
     var sd = new Date()
     sd.setDate(sdate[2])
     sd.setMonth((sdate[1]) - 1)
     sd.setFullYear(sdate[0])
-    var sDate = sdate[2] + '/' + sdate[1]
+    var sDate = sdate[2] + '/' + sdate[1] + '/' + sdate[0]
     var ed = new Date()
     ed.setDate(edate[2])
     ed.setMonth((edate[1]) - 1)
     ed.setFullYear(edate[0])
-    var eDate = edate[2] + '/' + edate[1]
+    var eDate = edate[2] + '/' + edate[1] + '/' + edate[0]
     var map = {}
     var details = {}
     info = {}
-    var flag = 0;
     var info = db.child("Daily");
     info.once("value", function(snapshot) {
         if (snapshot.val() != null) {
@@ -184,6 +187,9 @@ router.post('/logged/dates/', function(req, res, next) {
                                 } else {
                                     for (var m in map[key][vnum]) {
                                         if (map[key][vnum][m].mechanicName.toLowerCase() == search) {
+                                            details[key][vnum] = map[key][vnum]
+                                        }
+                                        if(map[key][vnum][m].description.toLowerCase().includes(search)){
                                             details[key][vnum] = map[key][vnum]
                                         }
                                     }
@@ -210,9 +216,8 @@ router.post('/logged/dates/', function(req, res, next) {
 router.post('/logged/vehicle/', function(req, res, next) {
     var map = {}
     var details = {}
-    var flag = 0;
     if (req.body.search == null) {
-        vNum = req.body.vehicleNum.toLowerCase();
+        req.session.vNum = req.body.cars.toLowerCase();
     } else {
         var mname = req.body.search.toLowerCase()
     }
@@ -223,11 +228,15 @@ router.post('/logged/vehicle/', function(req, res, next) {
             for (var key in map) {
                 details[key] = {}
                 for (var k in map[key]) {
-                    if (k.toLowerCase().includes(vNum)) {
+                    if (k.toLowerCase().includes(req.session.vNum)) {
                         if (req.body.search != null) {
-                            for (var m in map[key][k])
+                            for (var m in map[key][k]){
                                 if (mname == map[key][k][m].mechanicName.toLowerCase())
                                     details[key][k] = map[key][k]
+                                if(map[key][k][m].description.toLowerCase().includes(mname)){
+                                    details[key][k] = map[key][k]
+                                }
+                            }
                         } else {
                             details[key][k] = map[key][k]
                         }
@@ -235,12 +244,12 @@ router.post('/logged/vehicle/', function(req, res, next) {
                 }
             }
             if (Object.keys(details).length != 0) {
-                res.render('filter', { title: "Details", details: true, empty: false, sdate: null, edate: null, dates: false, vehicle: true, date: false, info: details });
+                res.render('filter', { title: "Details", details: true, empty: false, sdate: null, edate: null, dates: false, vehicle: true, date: false, info: details,vehicles:req.session.vehicles });
             } else {
-                res.render('filter', { title: "Details", details: false, empty: true, sdate: null, edate: null, dates: true, vehicle: false, date: false });
+                res.render('filter', { title: "Details", details: false, empty: true, sdate: null, edate: null, dates: true, vehicle: false, date: false,vehicles:req.session.vehicles });
             }
         } else {
-            res.render('filter', { title: "Details", details: false, empty: true, sdate: null, edate: null, dates: true, vehicle: false, date: false });
+            res.render('filter', { title: "Details", details: false, empty: true, sdate: null, edate: null, dates: true, vehicle: false, date: false,vehicles:req.session.vehicles });
         }
     });
 });
