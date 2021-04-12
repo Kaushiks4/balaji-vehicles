@@ -469,10 +469,11 @@ router.post('/logged/adduser/', function(req, res, next) {
 });
 
 
-router.get('/logged/deletew/:name', function(req, res, next) {
+router.get('/logged/deletew/:dept/:name', function(req, res, next) {
+    var dept = req.params.dept;
     var name = req.params.name;
     users = db.child('Mechanics');
-    users.child(name).remove();
+    users.child(dept).child(name).remove();
     res.redirect('/logged/workers/');
 });
 
