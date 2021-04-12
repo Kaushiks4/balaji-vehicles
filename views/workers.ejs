@@ -45,34 +45,80 @@
     <br>
     <div class="container">
         <br><br>
-        <a href="/logged/addworker/" class="float-right btn btn-primary">Add Worker</a>
         <% if(add) { %>
-            <form method="post">
+            <br><br>
+            <h4>Create an excel file in this format and upload below</h4>
+            <br>
+            <table class="table table-hover">
+                <thead>
+                    <th> Department </th>
+                    <th> Employee Name </th>
+                    <th> Contact No </th>
+                </thead>
+                <tbody>
+                        <tr class="clickable-rows">
+                            <td>
+                                Text format
+                            </td>
+                            <td>
+                                Text format
+                            </td>
+                            <td>
+                                Number format
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <br><br>
+            <hr>
+            <form method="post" action="/secured/addworkers/" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="name"> Mechanic name: </label>
-                    <input type="text" id="name" name="username" required/>
+                    <label for="exampleInputPassword1">Choose an Excel file to upload</label>
+                    <input type="file" class="form-control" id="exampleInputPassword1" name="excel" required>
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-success" value="Submit">
+                    <input type="submit" class="btn btn-primary" value="Upload" />
                 </div>
             </form>
             <% } %>
+                <br><br>
                 <% if(empty){ %>
+                    <button class="btn btn-primary float-right">Add Workers</button>
                     <h1> No mechanics found.</h1>
                     <% } %>
                         <% if(show) { %>
-                            <div class="card user">
-                                <img class="card-img-top" src="/images/user.png" alt="">
+                            <button class="btn btn-primary float-right">Add Workers</button>
+                            <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title">Workers</h3><br>
-                                    <% for(var key in info){ %>
-                                        <a href="/logged/deletew/<%= key %>" class="float-right btn btn-danger">Delete</a>
-                                        <strong><p>
-                                            Name:
-                                            <%= info[key].Mechanic_name %>
-                                        </p></strong>
-                                        <br>
-                                        <% } %>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <th> Department </th>
+                                            <th> Employee Name </th>
+                                            <th> Employee contact No </th>
+                                            <th> Action </th>
+                                        </thead>
+                                        <tbody>
+                                            <% for(var key in info){ 
+                                                for(var k in info[key]) { %>
+                                                <tr class="clickable-rows">
+                                                    <td>
+                                                        <%= info[key][k].department %>
+                                                    </td>
+                                                    <td>
+                                                        <%= info[key][k].name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= info[key][k].contact %>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/logged/deletew/<%= key %>" class="btn btn-danger">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div><br>
                             <% } %>
@@ -81,6 +127,13 @@
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/popper.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
+    <script>
+         jQuery(document).ready(function() {
+            $("button").click(function(){
+                window.location = '/secured/addworkers/';
+            });
+        });
+    </script>
 </body>
 
 </html>

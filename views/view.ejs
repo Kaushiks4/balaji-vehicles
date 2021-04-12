@@ -1,241 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    <title>
-        <%= title %>
-    </title>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Balaji Transports</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/secured/home/">Home</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/logged/details/">Overall Details</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logged/workers/">Workers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logged/users/">Users</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container">
-        <br>
-        <h1>
-            <%= num %>
-        </h1>
-        <% var id = num.split(" "); %>
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-hover">
-                        <thead>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <title>
+            <%= title %>
+        </title>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">Balaji Transports</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/secured/home/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/logged/details/">Overall Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logged/workers/">Workers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logged/users/">Users</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <br>
+            <h1>
+                <%= num %>
+            </h1>
+            <% var id = num.split(" "); %>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
                             <thead>
-                                <% if(info["Morning"] != null) { %>
-                                    <th> Morning Photo </th>
-                                    <% } %>
-                                        <% if(info["Afternoon"] != null) { %>
-                                            <th> Afternoon Photo </th>
-                                            <% } %>
-                                                <% if(info["Evening"] != null) { %>
-                                                    <th> Evening Photo </th>
-                                                    <% } %>
+                                <thead>
+                                    <% if(info["Morning"] != null) { %>
+                                        <th> Morning Photo </th>
+                                        <% } %>
+                                            <% if(info["Afternoon"] != null) { %>
+                                                <th> Afternoon Photo </th>
+                                                <% } %>
+                                                    <% if(info["Evening"] != null) { %>
+                                                        <th> Evening Photo </th>
+                                                        <% } %>
+                                </thead>
+                                <tbody>
+                                    <% if(info["Morning"] != null) { %>
+                                        <td>
+                                            <div id="morning" class="carousel" data-ride="carousel" data-interval="false">
+                                                <ul class="carousel-indicators">
+                                                    <% var l = 0;
+                                                            for(var m in info["Morning"]["Images"]) {
+                                                                if(l==0){ %>
+                                                        <li data-target="#morning" data-slide-to="0" class="active"></li>
+                                                        <% l++ %>
+                                                            <% } else{ %>
+                                                                <li data-target="#morning" data-slide-to="<%= l %>"></li>
+                                                                <% } %>
+                                                                    <% } %>
+                                                </ul>
+                                                <div class="carousel-inner">
+                                                    <% var l = 0;
+                                                            for(var m in info["Morning"]["Images"]) {
+                                                                if(l==0){ %>
+                                                        <div class="carousel-item active">
+                                                            <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" alt="Image"></a>
+                                                        </div>
+                                                        <% l++ %>
+                                                            <% } else { %>
+                                                                <div class="carousel-item">
+                                                                    <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" alt="Image"></a>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
+                                                </div>
+                                                <a class="carousel-control-prev" href="#morning" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon"></span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#morning" data-slide="next">
+                                                    <span class="carousel-control-next-icon"></span>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <% } %>
+                                            <% if(info["Afternoon"] != null) { %>
+                                                <td>
+                                                    <div id="afternoon" class="carousel" data-ride="carousel" data-interval="false">
+                                                        <ul class="carousel-indicators">
+                                                            <% var l = 0;
+                                                                for(var m in info["Afternoon"]["Images"]) {
+                                                                    if(l==0) { %>
+                                                                <li data-target="#afternoon" data-slide-to="0" class="active"></li>
+                                                                <% l++ %>
+                                                                    <% } else{ %>
+                                                                        <li data-target="#afternoon" data-slide-to="<%= l %>"></li>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                        </ul>
+                                                        <div class="carousel-inner">
+                                                            <% var l = 0;
+                                                                for(var m in info["Afternoon"]["Images"]) {
+                                                                    if(l==0) { %>
+                                                                <div class="carousel-item active">
+                                                                    <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" alt="Image"></a>
+                                                                </div>
+                                                                <% l++ %>
+                                                                    <% } else { %>
+                                                                        <div class="carousel-item">
+                                                                            <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" alt="Image"></a>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                        </div>
+                                                        <a class="carousel-control-prev" href="#afternoon" data-slide="prev">
+                                                            <span class="carousel-control-prev-icon"></span>
+                                                        </a>
+                                                        <a class="carousel-control-next" href="#afternoon" data-slide="next">
+                                                            <span class="carousel-control-next-icon"></span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <% } %>
+                                                    <% if(info["Evening"] != null) { %>
+                                                        <td>
+                                                            <div id="evening" class="carousel" data-ride="carousel" data-interval="false">
+                                                                <ul class="carousel-indicators">
+                                                                    <% var l = 0;
+                                                            for(var m in info["Evening"]["Images"]) {
+                                                                if(l==0){ %>
+                                                                        <li data-target="#evening" data-slide-to="0" class="active"></li>
+                                                                        <% l++ %>
+                                                                            <% } else{ %>
+                                                                                <li data-target="#evening" data-slide-to="<%= l %>"></li>
+                                                                                <% } %>
+                                                                                    <% } %>
+                                                                </ul>
+                                                                <div class="carousel-inner">
+                                                                    <% var l = 0;
+                                                            for(var m in info["Evening"]["Images"]) {
+                                                                if(l==0) { %>
+                                                                        <div class="carousel-item active">
+                                                                            <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' width="auto" height="300vw" alt="Image"></a>
+                                                                        </div>
+                                                                        <% l++ %>
+                                                                            <% } else { %>
+                                                                                <div class="carousel-item">
+                                                                                    <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' height="300vw" alt="Image"></a>
+                                                                                </div>
+                                                                                <% } %>
+                                                                                    <% } %>
+                                                                </div>
+                                                                <a class="carousel-control-prev" href="#evening" data-slide="prev">
+                                                                    <span class="carousel-control-prev-icon"></span>
+                                                                </a>
+                                                                <a class="carousel-control-next" href="#evening" data-slide="next">
+                                                                    <span class="carousel-control-next-icon"></span>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <% } %>
+                                </tbody>
+                        </table><br><br>
+                        <table class="table table-hover">
+                            <thead>
+                                <th>Session</th>
+                                <th>Description</th>
+                                <th>Mechanic Name</th>
+                                <th>Driver Name</th>
+                                <th>Uploaded By</th>
                             </thead>
                             <tbody>
-                                <% if(info["Morning"] != null) { %>
-                                    <td>
-                                        <div id="morning" class="carousel" data-ride="carousel" data-interval="false">
-                                            <ul class="carousel-indicators">
-                                                <% var l = 0;
-                                                        for(var m in info["Morning"]["Images"]) {
-                                                            if(l==0){ %>
-                                                    <li data-target="#morning" data-slide-to="0" class="active"></li>
-                                                    <% l++ %>
-                                                        <% } else{ %>
-                                                            <li data-target="#morning" data-slide-to="<%= l %>"></li>
-                                                            <% } %>
-                                                                <% } %>
-                                            </ul>
-                                            <div class="carousel-inner">
-                                                <% var l = 0;
-                                                        for(var m in info["Morning"]["Images"]) {
-                                                            if(l==0){ %>
-                                                    <div class="carousel-item active">
-                                                        <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" alt="Image"></a>
-                                                    </div>
-                                                    <% l++ %>
-                                                        <% } else{ %>
-                                                            <div class="carousel-item">
-                                                                <a href='<%= info["Morning"]["Images"][m] %>'><img src='<%= info["Morning"]["Images"][m] %>' height="300vw" alt="Image"></a>
-                                                            </div>
-                                                            <% } %>
-                                                                <% } %>
-                                            </div>
-                                            <a class="carousel-control-prev" href="#morning" data-slide="prev">
-                                                <span class="carousel-control-prev-icon"></span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#morning" data-slide="next">
-                                                <span class="carousel-control-next-icon"></span>
-                                            </a>
-                                        </div>
-                                    </td>
+                                <% for(var key in info ) { %>
+                                    <tr>
+                                        <td>
+                                            <%= key %>
+                                        </td>
+                                        <td>
+                                            <%= info[key].description %>
+                                        </td>
+                                        <td>
+                                            <%= info[key].mechanicName %>
+                                        </td>
+                                        <td>
+                                            <%= info[key].driverName %>
+                                        </td>
+                                        <td>
+                                            <%= info[key].uploadedBy %>
+                                        </td>
+                                    </tr>
                                     <% } %>
-                                        <% if(info["Afternoon"] != null) { %>
-                                            <td>
-                                                <div id="afternoon" class="carousel" data-ride="carousel" data-interval="false">
-                                                    <ul class="carousel-indicators">
-                                                        <% var l = 0;
-                                                            for(var m in info["Afternoon"]["Images"]) {
-                                                                if(l==0) { %>
-                                                            <li data-target="#afternoon" data-slide-to="0" class="active"></li>
-                                                            <% l++ %>
-                                                                <% } else{ %>
-                                                                    <li data-target="#afternoon" data-slide-to="<%= l %>"></li>
-                                                                    <% } %>
-                                                                        <% } %>
-                                                    </ul>
-                                                    <div class="carousel-inner">
-                                                        <% var l = 0;
-                                                            for(var m in info["Afternoon"]["Images"]) {
-                                                                if(l==0) { %>
-                                                            <div class="carousel-item active">
-                                                                <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" alt="Image"></a>
-                                                            </div>
-                                                            <% l++ %>
-                                                                <% } else { %>
-                                                                    <div class="carousel-item">
-                                                                        <a href='<%= info["Afternoon"]["Images"][m] %>'><img src='<%= info["Afternoon"]["Images"][m] %>' height="300vw" alt="Image"></a>
-                                                                    </div>
-                                                                    <% } %>
-                                                                        <% } %>
-                                                    </div>
-                                                    <a class="carousel-control-prev" href="#afternoon" data-slide="prev">
-                                                        <span class="carousel-control-prev-icon"></span>
-                                                    </a>
-                                                    <a class="carousel-control-next" href="#afternoon" data-slide="next">
-                                                        <span class="carousel-control-next-icon"></span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <% } %>
-                                                <% if(info["Evening"] != null) { %>
-                                                    <td>
-                                                        <div id="evening" class="carousel" data-ride="carousel" data-interval="false">
-                                                            <ul class="carousel-indicators">
-                                                                <% var l = 0;
-                                                        for(var m in info["Evening"]["Images"]) {
-                                                            if(l==0){ %>
-                                                                    <li data-target="#evening" data-slide-to="0" class="active"></li>
-                                                                    <% l++ %>
-                                                                        <% } else{ %>
-                                                                            <li data-target="#evening" data-slide-to="<%= l %>"></li>
-                                                                            <% } %>
-                                                                                <% } %>
-                                                            </ul>
-                                                            <div class="carousel-inner">
-                                                                <% var l = 0;
-                                                        for(var m in info["Evening"]["Images"]) {
-                                                            if(l==0) { %>
-                                                                    <div class="carousel-item active">
-                                                                        <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' width="auto" height="300vw" alt="Image"></a>
-                                                                    </div>
-                                                                    <% l++ %>
-                                                                        <% } else { %>
-                                                                            <div class="carousel-item">
-                                                                                <a href='<%= info["Evening"]["Images"][m] %>'><img src='<%= info["Evening"]["Images"][m] %>' height="300vw" alt="Image"></a>
-                                                                            </div>
-                                                                            <% } %>
-                                                                                <% } %>
-                                                            </div>
-                                                            <a class="carousel-control-prev" href="#evening" data-slide="prev">
-                                                                <span class="carousel-control-prev-icon"></span>
-                                                            </a>
-                                                            <a class="carousel-control-next" href="#evening" data-slide="next">
-                                                                <span class="carousel-control-next-icon"></span>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <% } %>
                             </tbody>
-                    </table><br><br>
-
-                    <table class="table table-hover">
-                        <thead>
-                            <th>Session</th>
-                            <th>Description</th>
-                            <th>Mechanic Name</th>
-                            <th>Driver Name</th>
-                            <th>Uploaded By</th>
-                        </thead>
-                        <tbody>
-                            <% for(var key in info ) { %>
-                                <tr>
-                                    <td>
-                                        <%= key %>
-                                    </td>
-                                    <td>
-                                        <%= info[key].description %>
-                                    </td>
-                                    <td>
-                                        <%= info[key].mechanicName %>
-                                    </td>
-                                    <td>
-                                        <%= info[key].driverName %>
-                                    </td>
-                                    <td>
-                                        <%= info[key].uploadedBy %>
-                                    </td>
-                                </tr>
+                        </table>
+                        <% for(var key in info) { %>
+                            <p style="font-size:large"><strong>Mechanic Photo: </strong>
+                                <a href='<%= info[key].mPhoto %>'><img src='<%= info[key].mPhoto %>' height="200vw"/></a>
+                            </p>
+                            <% break %>
                                 <% } %>
-                        </tbody>
-                    </table>
-                    <% for(var key in info) { %>
-                        <p style="font-size:large"><strong>Mechanic Photo: </strong>
-                            <a href='<%= info[key].mPhoto %>'><img src='<%= info[key].mPhoto %>' height="200vw"/></a>
-                        </p>
-                        <% break %>
-                            <% } %>
-                                <% for(var key in info) { %>
-                                    <% if(info[key].Old_Photo != "" && info[key].Old_Photo != null || info[key].New_Photo != "" && info[key].New_Photo != null) { %>
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <th>Old Spare Photo</th>
-                                                <th>New Spare Photo</th>
-                                            </thead>
-                                            <tbody>
-                                                <td>
-                                                    <a href='<%= info[key].Old_Photo %>'><img src='<%= info[key].Old_Photo %>' width="500vw" height="500vw" alt="Image"> </a>
-                                                </td>
-                                                <td>
-                                                    <a href='<%= info[key].New_Photo %>'><img src='<%= info[key].New_Photo %>' width="500vw" height="500vw" alt="Image"></a>
-                                                </td>
-                                            </tbody>
-                                        </table>
-                                        <% break %>
-                                            <% } %>
+                                    <% for(var key in info) { %>
+                                        <% if(info[key].Old_Photo != "" && info[key].Old_Photo != null || info[key].New_Photo != "" && info[key].New_Photo != null) { %>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <th>Old Spare Photo</th>
+                                                    <th>New Spare Photo</th>
+                                                </thead>
+                                                <tbody>
+                                                    <td>
+                                                        <a href='<%= info[key].Old_Photo %>'><img src='<%= info[key].Old_Photo %>' width="500vw" height="500vw" alt="Image"> </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href='<%= info[key].New_Photo %>'><img src='<%= info[key].New_Photo %>' width="500vw" height="500vw" alt="Image"></a>
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                            <% break %>
                                                 <% } %>
+                                                    <% } %>
+                    </div>
                 </div>
-            </div>
-    </div>
-    <br><br>
-    <script src="/javascripts/jquery.min.js "></script>
-    <script src="/javascripts/popper.min.js "></script>
-    <script src="/javascripts/bootstrap.min.js "></script>
-</body>
-
+        </div>
+        <br><br>
+        <script src="/javascripts/jquery.min.js "></script>
+        <script src="/javascripts/popper.min.js "></script>
+        <script src="/javascripts/bootstrap.min.js "></script>
+    </body>
 </html>

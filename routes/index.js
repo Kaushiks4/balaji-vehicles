@@ -1,10 +1,11 @@
 var express = require('express');
 var admin = require("firebase-admin");
+const Excel = require('exceljs');
+const excelToJson = require('convert-excel-to-json');
 var router = express.Router();
 
 var admin = require('firebase-admin');
 var db = admin.database().ref();
-var vNum = ""
 
 router.get('/', function(req, res, next) {
     res.render('login');
@@ -40,8 +41,6 @@ router.get('/secured/home/', function(req, res, next) {
         }
         var date = dd + '-' + m + '-' + y;
         var map = {}
-        var details = {}
-        var flag = 0;
         var info = db.child("Daily");
         info.once("value", function(snapshot) {
             if (snapshot.val() != null) {
@@ -143,7 +142,7 @@ router.get('/logged/vehicle/', function(req, res, next) {
 });
 
 
-router.post('/logged/dates/', function(req, res, next) {
+router.post('/logged/dates/', function(req, res) {
     if (req.body.stDate != null) {
         req.session.stDate = req.body.stDate
         req.session.endate = req.body.endDate
@@ -201,6 +200,7 @@ router.post('/logged/dates/', function(req, res, next) {
                     }
                 }
                 if (Object.keys(details).length != 0) {
+                    req.session.data = details;
                     res.render('filter', { title: "Details", details: true, empty: false, sdate: sDate, edate: eDate, dates: false, vehicle: false, date: true, info: details });
                 } else {
                     res.render('filter', { title: "Details", details: false, empty: true, sdate: null, edate: null, dates: true, vehicle: false, date: false });
@@ -244,6 +244,7 @@ router.post('/logged/vehicle/', function(req, res, next) {
                 }
             }
             if (Object.keys(details).length != 0) {
+                req.session.data = details;
                 res.render('filter', { title: "Details", details: true, empty: false, sdate: null, edate: null, dates: false, vehicle: true, date: false, info: details,vehicles:req.session.vehicles });
             } else {
                 res.render('filter', { title: "Details", details: false, empty: true, sdate: null, edate: null, dates: true, vehicle: false, date: false,vehicles:req.session.vehicles });
@@ -287,6 +288,7 @@ router.post('/logged/details/vehicle', function(req, res, next) {
                         }
                     }
                     if (flag == 0) {
+                        req.session.data = details;
                         res.render('view', { title: "Details", dates: false, mechanic: false, vehicle: true, info: details, empty: false, vname: vname, mname: null, sdate: null, edate: null });
                     } else {
                         res.render('view', { title: "Details", dates: false, mechanic: false, vehicle: true, info: null, empty: true, vname: vname, mname: null, sdate: null, edate: null });
@@ -326,6 +328,7 @@ router.post('/logged/details/date', function(req, res, next) {
             if (flag == 0) {
                 res.render('view', { title: "Details", dates: true, mechanic: false, vehicle: false, info: null, empty: true, vname: null, mname: null, sdate: sdate, edate: edate });
             } else {
+                req.session.data = details;
                 res.render('view', { title: "Details", dates: true, mechanic: false, vehicle: false, info: details, empty: false, vname: null, mname: null, sdate: sdate, edate: edate });
             }
         } else {
@@ -391,7 +394,12 @@ router.post('/logged/workers/', function(req, res, next) {
         if (snapshot != null) {
             map = snapshot.val();
             for (var key in map) {
-                if (key.toLowerCase() == s) {
+                for(var k in map[key])
+                if (map[key][k]['name'].toLowerCase().includes(s)) {
+                    details[key] = map[key];
+                } else if(map[key][k]['contact'].toString().toLowerCase().includes(s)){
+                    details[key] = map[key];
+                } else if(map[key][k]['department'].toLowerCase().includes(s)){
                     details[key] = map[key];
                 }
             }
@@ -404,7 +412,7 @@ router.post('/logged/workers/', function(req, res, next) {
 
 
 
-router.get('/logged/addworker/', function(req, res, next) {
+router.get('/secured/addworkers/', function(req, res, next) {
     res.render('workers', { title: "Workers", info: null, empty: false, add: true, show: false });
 });
 
@@ -414,19 +422,41 @@ router.get('/logged/adduser/', function(req, res, next) {
     res.render('users', { title: "Users", info: null, empty: false, add: true, show: false });
 });
 
-router.post('/logged/addworker/', function(req, res, next) {
-    var map = {}
-    var users = db.child("Mechanics");
-    var name = req.body.username;
-    data = {
-        Mechanic_name: name,
-    }
-    users.child(name).set(data);
-    res.redirect('/logged/workers/')
+router.post('/secured/addworkers/', async function(req, res, next) {
+        let promise = new Promise((resolve) => {
+            var file = req.files.excel;
+            setTimeout(() => resolve(file), 1000)
+        });
+        var file = await promise;
+        var filename = file.name;
+        var data = {}
+        var bgs = db.child("Mechanics");
+        file.mv('./uploads/' + filename, async function(err) {
+            if (err) {
+                res.send("<h1> Error while uploading, Check your internet and try again </h1>");
+            } else {
+                var result = excelToJson({
+                    sourceFile: "./uploads/" + filename,
+                    sheets: ['Sheet1'],
+                    header: {
+                        rows: 1
+                    },
+                    columnToKey: {
+                        '*': '{{columnHeader}}'
+                    }
+                });
+                for (var key in result['Sheet1']) {
+                    data["name"] = result['Sheet1'][key]["Employee Name"];
+                    data["contact"] = result['Sheet1'][key]["Contact No"];
+                    data["department"] = result['Sheet1'][key].Department
+                    bgs.child(data["department"]).child(data["name"]).set(data);
+                }
+                res.redirect('/logged/workers/');
+            }
+        });
 });
 
 router.post('/logged/adduser/', function(req, res, next) {
-    var map = {}
     var users = db.child("Users");
     var name = req.body.username;
     var password = req.body.pwd;
@@ -451,6 +481,49 @@ router.get('/logged/deleteu/:name', function(req, res, next) {
     users = db.child('Users');
     users.child(name).remove();
     res.redirect('/logged/users/');
+});
+
+router.get('/secured/reports/' ,function(req,res){ 
+        let workbook = new Excel.Workbook()
+        let worksheet = workbook.addWorksheet('Sheet1')
+        headerss = ["Date","Vehicle","Description","Mechanic Name"];
+        worksheet.addRow(headerss);
+        for(var key in req.session.data){
+            data = []
+            if(Object.keys(req.session.data[key]).length > 0){
+                for(var k in req.session.data[key]){
+                    j = 0
+                    data[j++] = key
+                    data[j++] = k;
+                    if(req.session.data[key][k].Morning != null) {
+                        data[j++] = req.session.data[key][k].Morning.description;
+                        } else if(req.session.data[key][k].Afternoon != null) {
+                            data[j++] = req.session.data[key][k].Afternoon.description;
+                            } else if(req.session.data[key][k].Evening != null) { 
+                                        data[j++] = req.session.data[key][k].Evening.description; 
+                                            }
+                    if(req.session.data[key][k].Morning != null) { 
+                    data[j++] = info[key][k].Morning.mechanicName;
+                        } else if(req.session.data[key][k].Afternoon != null) { 
+                            data[j++] = req.session.data[key][k].Afternoon.mechanicName;
+                                } else if(req.session.data[key][k].Evening != null) {
+                                    data[j++] = req.session.data[key][k].Evening.mechanicName;
+                                    }
+                    worksheet.addRow(data);
+                }
+            }
+        }
+        res.setHeader(
+            "Content-Type",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          );
+          res.setHeader(
+            "Content-Disposition",
+            "attachment; filename=" + "Report.xlsx"
+          );
+          return workbook.xlsx.write(res).then(function () {
+            res.status(200).end();
+          });
 });
 
 module.exports = router;

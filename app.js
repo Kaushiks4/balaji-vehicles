@@ -3,7 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var admin = require("firebase-admin");
+var admin = require('firebase-admin')
+var upload = require('express-fileupload');
 const session = require('express-session')
 
 var serviceAccount = require("./vehicle.json");
@@ -29,6 +30,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(upload());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

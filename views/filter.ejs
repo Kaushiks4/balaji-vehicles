@@ -85,6 +85,8 @@
                                         <%= edate %>
                                 </h1><br>
                                 <% } %>
+                                <button class="btn btn-primary">Generate Report</button>
+                                <br><br>
                                     <table class="table table-hover">
                                         <thead>
                                             <th> Date </th>
@@ -138,6 +140,9 @@
         jQuery(document).ready(function() {
             $(".clickable-rows").click(function() {
                 window.location = $(this).data("href");
+            });
+            $("button").click(function(){
+                window.location = '/secured/reports/';
             });
         });
     </script>
